@@ -43,21 +43,25 @@ int countSym(char*str) {
 // 4.	**Пользователь вводит строку и слово.
 // Осуществить в этой строке поиск заданного слова.
 char *subStr(char* str1, const char* str2) {
-	int k = 0;
+	
 	char* word = str1;
-	int tmp = 0;
-	for (int i = 0; i < strlen(str1); i++)
+	//cout << strlen(str1) << " " << strlen(str2) << endl;
+	int n = 0;
+	while(word <= str1 + strlen(str1) - strlen(str2))
 	{
-		k = 0;
-		tmp = i;
-		for (int j = 0; j < strlen(str2); j++)
+		//cout << word << endl; //// test
+		n = strncmp(word, str2, strlen(str2)); //!!!!!!!!!!!!! здксь обязательно сравнивать не str1, str2,
+		// а именно смещающийся word с str2, ведь str1 не меняется, бегает только вспомогательный указатель
+		//cout << n << endl;
+		if (n == 0)
 		{
-			if (str1[i++] != str2[j]) break;
-			else k++;
+			//cout << "found" << endl;
+			return word;
 		}
-		i = tmp;
-		if (k == strlen(str2)) word=str1+i;
+		word++;
 	}
+	//cout << endl << "test" << word << endl;
+	if (word == str1 + strlen(str1) - strlen(str2) +1) word = nullptr;
 	return word;
 }
 
@@ -88,7 +92,7 @@ int main()
 		break;
 		case 2: // 4
 		{
-			char str1[100] = "Hello My World!";
+			char str1[100] = "Hello World!";
 			char str2[100] = "World";
 
 			char *SearchWord = subStr(str1, str2);
